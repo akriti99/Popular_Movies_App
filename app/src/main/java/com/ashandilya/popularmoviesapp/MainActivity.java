@@ -42,14 +42,6 @@ public class MainActivity extends AppCompatActivity {
         movies = new ArrayList<>();
         showMovies();
 
-        layoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(layoutManager);
-
-        movieAdapter = new MovieAdapter(this, movies);
-        recyclerView.setAdapter(movieAdapter);
-        //MovieAdapter = (Adapter) new MovieAdapter(this, movies);
-        //recyclerView.setAdapter((RecyclerView.Adapter) MovieAdapter);
-
     }
 
     private void showMovies() {
@@ -74,6 +66,11 @@ public class MainActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
                 }
+                layoutManager = new LinearLayoutManager(getApplicationContext());
+                recyclerView.setLayoutManager(layoutManager);
+
+                movieAdapter = new MovieAdapter(getApplicationContext(), movies);
+                recyclerView.setAdapter(movieAdapter);
             }
         }, new Response.ErrorListener() {
             @Override
@@ -81,5 +78,6 @@ public class MainActivity extends AppCompatActivity {
                 Log.d((String) Tag, "onErrorResponse: " + error.getMessage());
             }
         });
+        queue.add(jsonArrayRequest);
     }
 }
