@@ -16,8 +16,8 @@ import java.util.List;
 
 public class MovieAdapter extends RecyclerView.Adapter <MovieAdapter.MyViewHolder> {
 
-    LayoutInflater inflater;
-    List<Movie> movies;
+    private LayoutInflater inflater;
+    private List<Movie> movies;
 
     public MovieAdapter(Context context, List<Movie> movies){
         this.inflater = LayoutInflater.from(context);
