@@ -26,11 +26,10 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
-    RecyclerView.LayoutManager layoutManager;
     MovieAdapter movieAdapter;
     List<Movie> movies;
     private static String movieDb = "https://api.themoviedb.org/3/discover/movie?api_key=d490111bf870ffef1ad5b1519fc927ca";
-    private Object Tag;
+    //private Object Tag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         recyclerView = findViewById(R.id.movieRecyclerView);
-        recyclerView.setHasFixedSize(true);
+       // recyclerView.setHasFixedSize(true);
         movies = new ArrayList<>();
         showMovies();
 
@@ -46,10 +45,12 @@ public class MainActivity extends AppCompatActivity {
 
     private void showMovies() {
         RequestQueue queue = Volley.newRequestQueue(this);
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, movieDb, null, new Response.Listener<JSONArray>() {
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET,
+                movieDb, null,
+                new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
-                for (int i = 0; i < response.length(); i++) {
+                for (int i = 0;  i < response.length(); i++) {
                     try {
                         JSONObject movieObject = response.getJSONObject(i);
 
@@ -66,8 +67,7 @@ public class MainActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
                 }
-                layoutManager = new LinearLayoutManager(getApplicationContext());
-                recyclerView.setLayoutManager(layoutManager);
+                recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
 
                 movieAdapter = new MovieAdapter(getApplicationContext(), movies);
                 recyclerView.setAdapter(movieAdapter);
@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d((String) Tag, "onErrorResponse: " + error.getMessage());
+                Log.d("tag", "onErrorResponse: " + error.getMessage());
             }
         });
         queue.add(jsonArrayRequest);
